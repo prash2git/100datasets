@@ -1,14 +1,14 @@
 # COYOTES - 100 DATASET
 > Collection of R and Python notebooks for 100 dataset bootcamp.
 
-#Goals:
+# Goals:
 - Arrive fresh Saturday morning
 - Solve 10 datasets
 - Present in the evening
 - Collaborate during the week to finish assignments
 - Repeat next 10 weekends...
   
-#Objectives
+# Objectives
 - Work together as team
 - Help each other
 - Learn, Educate and Have Fun...
@@ -28,21 +28,21 @@
 
 ## Members and Expertise:
 
-##Python - Team
+## Python - Team  
     Dan
     Ben
     Kate
     Sachin
 
-##R - Team
+## R - Team
     Ruit
     Sudhir
     Sachin (Partial)
 
-##Overall Logistics
+## Overall Logistics  
     Sachin - GIT, Manage DataSets, Curate Notebooks 
    
-##Saturday Drills
+## Saturday Drills
 - #### Discuss DataSets/Objectives/Roles/Deliverables - Limit to 30 mins
 - #### Create task lists with clear responsibilities/deliverables
 - #### Members form teams of one and two and self assign tasks
@@ -92,7 +92,7 @@
 Send an email:  
 [email: Sachin Naik](<mailto:sachin.u.naik@gmail.com>)
 
-##Join Support Vectors Slack Group  
+## Join Support Vectors Slack Group  
 [Support Vectors Slack Group](<http://supportvectors-hq.slack.com>)
 
 ## Contribute to Maintain this Page
