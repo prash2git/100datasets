@@ -1,0 +1,96 @@
+---
+title: "Galton Dataset"
+author: "Pravin Kantak"
+date: "Sept 21, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+
+## Load the dataset & view summary
+```{r load-data, echo=TRUE}
+setwd("~/ML")
+##detach(data)
+data = read.csv("galton-families.csv")
+summary(data)
+attach(data)
+```
+
+## Visualize the data
+```{r visualization, echo=TRUE}
+library(corrplot)
+#pairs(data)
+pairs(~childHeight+father+mother+midparentHeight+children+childNum, data)
+
+data1 = subset(data, select=c(childHeight, father, mother, midparentHeight, children, childNum))
+cor1 = cor(data1)
+corrplot(cor1, method="ellipse")
+
+#plot(father, childHeight)
+#plot(mother , childHeight)
+plot(midparentHeight, childHeight)
+#plot(gender, childHeight)
+plot(childNum, childHeight)
+
+```
+
+## Split the data in Train & Test sets. 80% split is used with Random sampling
+```{r split the data in training and test, echo=TRUE}
+fraction=0.8
+trainrows = sample(nrow(data), floor(nrow(data) * fraction))
+traindata = data[trainrows,]
+testdata = data[-trainrows,]
+
+#print(nrow(data))
+#print(nrow(traindata))
+#print(nrow(testdata))
+```
+
+
+## Use Lapses for automatic parameter selection
+```{r regressor paramater selection, echo=TRUE}
+library(leaps)
+#library(MASS)
+subset = regsubsets(childHeight ~ father + mother + midparentHeight + children + childNum + as.factor(gender), data=traindata, nvmax=4)
+
+plot(subset, scale="adjr2", main="R-Squared")
+```
+
+## Build the model from the parameter scouting done above
+```{r Build the model, echo=TRUE}
+attach(traindata)
+model = lm(childHeight~ father+mother+midparentHeight+children+childNum+as.factor(gender))
+print(model)
+summary(model)
+
+plot(model)
+```
+
+
+## Test the Model
+```{r test the model, echo = TRUE}
+library(ggplot2)
+data1 = subset(testdata, select= c(father, mother, midparentHeight, children, childNum, gender))
+
+results = predict(model, data1)
+
+#plot(testdata$childHeight, col="red", pch=18)
+#par(new=TRUE)
+#plot(results,   col="blue",  pch=19)
+
+x = seq(1, nrow(testdata),1)
+df1 = data.frame(x=x, y=testdata$childHeight, type="Y")
+df2 = data.frame(x=x, y=results, type="Y^")
+df = rbind(df1, df2)
+ggplot(df)+geom_point(aes(x, y, color=type))
+
+```
